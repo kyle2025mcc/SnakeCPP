@@ -68,3 +68,7 @@ void board::setApple() {
     }
     }
 }
+
+void board::printBoard() {
+    
+}
