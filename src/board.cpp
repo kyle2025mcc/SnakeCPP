@@ -1,5 +1,6 @@
-#include <board.h>
+#include "../include/board.h"
 #include <ctime>
+#include <iostream>
 #define defaultRows 14
 #define defaultCols 16
 
@@ -70,5 +71,21 @@ void board::setApple() {
 }
 
 void board::printBoard() {
-    
+    for (int i = -1; i <= rows + 1; i++) {
+        for (int j = -1; j <=cols+1; j++) {
+            if (i ==rows+1) {
+                std::cout << "‾";
+            }
+            else if (i==-1) {
+                std::cout << "_";
+            }
+            else if (j == -1 || j == cols+1) {
+                std::cout << "|";
+            }
+            else {
+                std::cout << printingMap[gameBoard->at(i)[j]];
+            }
+        }
+        std::cout << "\n";
+    }
 }

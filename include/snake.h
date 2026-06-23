@@ -10,7 +10,7 @@ struct snakePosition {
     }
 };
 
-typedef enum snakeDirection{
+enum snakeDirection{
     up,
     down,
     right,

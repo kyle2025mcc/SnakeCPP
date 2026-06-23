@@ -1,4 +1,4 @@
-#include <snake.h>
+#include "../include/snake.h"
 #define defaultLength 4
 
 // Head starts at row 7 and col 4 with length 4
