@@ -1,6 +1,10 @@
 #include "../include/board.h"
 #include <ctime>
 #include <iostream>
+// This include allows windows to print the correct character 
+#ifdef _WIN32
+#include <windows.h>
+#endif
 #define defaultRows 14
 #define defaultCols 16
 
@@ -18,7 +22,7 @@ board::board() {
     }
     // Set up snake on board and first apple
     for (int k = 4; k >= 1; k--) {
-        gameBoard->at(defaultRows/2).at(defaultCols) = 1;
+        gameBoard->at(defaultRows/2).at(k) = 1;
     }
     gameBoard->at(defaultRows/2).at(defaultCols-4) = 2;
     // Called to make sure random seed used in functions is different for every run through of the program
@@ -71,10 +75,15 @@ void board::setApple() {
 }
 
 void board::printBoard() {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+
     for (int i = -1; i <= rows + 1; i++) {
         for (int j = -1; j <=cols+1; j++) {
             if (i ==rows+1) {
-                std::cout << "‾";
+                // Windows doesn't like this character for some reason, so have to do extra stuff to print correctly
+                std::cout << u8"‾";
             }
             else if (i==-1) {
                 std::cout << "_";

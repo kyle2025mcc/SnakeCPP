@@ -1,5 +1,5 @@
 #include <deque>
-
+#include "board.h"
 // Struct is used to repersent one cell of the snake on the board 
 struct snakePosition {
     int row;
@@ -12,8 +12,8 @@ struct snakePosition {
 
 enum snakeDirection{
     up,
-    down,
     right,
+    down,
     left
 };
 
@@ -23,14 +23,15 @@ class snake {
     private:
         int length;
         snakeDirection curDirection;
-        std::deque<snakePosition>* snakeQueue; // Head is at the head of the queue
+        std::deque<snakePosition>* snakeQueue; // Head of snake is at the head of the queue
     public:
         snake();
         snake(int row_u);
         ~snake();
         int getLength() {return length;}
+        snakeDirection getDirection() {return curDirection;}
         std::deque<snakePosition>* getQueue() {return snakeQueue;}
         void setLength(int u_length) {length = u_length;}
-        void move();
+        void move(board & boardObj);
 
 };
