@@ -24,8 +24,6 @@ class board {
         void setApple();
         void findApple(int & appleRow, int & appleCol);
         void printBoard();
-        void makeMove();
-        void isGameOver();
 
 };
 

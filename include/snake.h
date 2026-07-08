@@ -9,12 +9,14 @@ struct snakePosition {
         col = col_u;
     }
 };
-
+// Used as way to see the current direction as a snake.
+// Up and down are even while left and right are odd which allows comparisons to be easy
+// Also allows for easy math to be made to index on the board
 enum snakeDirection{
     up,
-    right,
+    left,
     down,
-    left
+    right
 };
 
 
@@ -23,15 +25,15 @@ class snake {
     private:
         int length;
         snakeDirection curDirection;
-        std::deque<snakePosition>* snakeQueue; // Head of snake is at the head of the queue
+        std::deque<snakePosition> snakeQueue; // Head of snake is at the head of the queue
     public:
         snake();
         snake(int row_u);
-        ~snake();
         int getLength() {return length;}
         snakeDirection getDirection() {return curDirection;}
-        std::deque<snakePosition>* getQueue() {return snakeQueue;}
+        void setDirection(snakeDirection newDirection) {curDirection = newDirection;}
+        std::deque<snakePosition> getQueue() {return snakeQueue;}
         void setLength(int u_length) {length = u_length;}
-        void move(board & boardObj);
+        int move(board & boardObj); // Most of the game logic is in this function
 
 };

@@ -65,12 +65,12 @@ void board::findApple(int& appleRow, int& appleCol) {
 
 void board::setApple() {
     while(true) {
-    int randRow = rand() % (rows + 1);
-    int randCol = rand() % (cols+1);
-    if (gameBoard->at(randRow).at(randCol) == 0) {
-        gameBoard->at(randRow).at(randCol) = 2;
-        return;
-    }
+        int randRow = rand() % (rows + 1);
+        int randCol = rand() % (cols+1);
+        if (gameBoard->at(randRow).at(randCol) == 0) {
+            gameBoard->at(randRow).at(randCol) = 2;
+            return;
+        }
     }
 }
 
