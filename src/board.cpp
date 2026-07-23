@@ -5,17 +5,17 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#define defaultRows 14
-#define defaultCols 16
+#define defaultRows 15
+#define defaultCols 17
 
 board::board() {
     gameBoard = new std::vector<std::vector<int> >; // 0 is blank space, 1 is worm, and 2 is an apple
     rows = defaultRows;
     cols = defaultCols;
     // Add all the row vectors 
-    for (int i = 0; i <= defaultRows; i++) {
+    for (int i = 0; i < defaultRows; i++) {
         std::vector<int> temp;
-        for (int j = 0; j <= defaultCols; j++) {
+        for (int j = 0; j < defaultCols; j++) {
             temp.push_back(0);
         }
         gameBoard->push_back(temp);
@@ -24,7 +24,7 @@ board::board() {
     for (int k = 4; k >= 1; k--) {
         gameBoard->at(defaultRows/2).at(k) = 1;
     }
-    gameBoard->at(defaultRows/2).at(defaultCols-4) = 2;
+    gameBoard->at(defaultRows/2).at(defaultCols-5) = 2;
     // Called to make sure random seed used in functions is different for every run through of the program
     srand(time(0));
 }
@@ -33,18 +33,20 @@ board::board(int row_u, int col_u) {
     rows = row_u;
     cols = col_u;
     // Add all the row vectors 
-    for (int i = 0; i <= row_u; i++) {
+    for (int i = 0; i < row_u; i++) {
         std::vector<int> temp;
-        for (int j = 0; j <= col_u; j++) {
+        for (int j = 0; j < col_u; j++) {
             temp.push_back(0);
         }
         gameBoard->push_back(temp);
     }
     // Set up snake on board and first apple
     for (int k = 4; k >= 1; k--) {
-        gameBoard->at(row_u/2).at(col_u) = 1;
+        gameBoard->at(row_u/2).at(k) = 1;
     }
-    gameBoard->at(row_u/2).at(col_u-4) = 2;
+    gameBoard->at(row_u/2).at(col_u - 4) = 2;
+    // Called to make sure random seed used in functions is different for every run through of the program
+    srand(time(0));
 }
 board::~board() {
     delete gameBoard;
@@ -65,8 +67,8 @@ void board::findApple(int& appleRow, int& appleCol) {
 
 void board::setApple() {
     while(true) {
-        int randRow = rand() % (rows + 1);
-        int randCol = rand() % (cols+1);
+        int randRow = rand() % (rows);
+        int randCol = rand() % (cols);
         if (gameBoard->at(randRow).at(randCol) == 0) {
             gameBoard->at(randRow).at(randCol) = 2;
             return;
@@ -79,16 +81,16 @@ void board::printBoard() {
     SetConsoleOutputCP(CP_UTF8);
 #endif
 
-    for (int i = -1; i <= rows + 1; i++) {
-        for (int j = -1; j <=cols+1; j++) {
-            if (i ==rows+1) {
+    for (int i = -1; i < rows + 1; i++) {
+        for (int j = -1; j < cols+1; j++) {
+            if (i ==rows) {
                 // Windows doesn't like this character for some reason, so have to do extra stuff to print correctly
                 std::cout << u8"‾";
             }
             else if (i==-1) {
                 std::cout << "_";
             }
-            else if (j == -1 || j == cols+1) {
+            else if (j == -1 || j == cols) {
                 std::cout << "|";
             }
             else {

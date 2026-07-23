@@ -37,7 +37,7 @@ int snake::move(board & boardObj) {
     }
 
     // Check if the border is hit
-    if (curHeadRow == -1 || curHeadRow == boardObj.getRows() + 1 || curHeadCol == -1 || curHeadCol == boardObj.getCols() + 1) {
+    if (curHeadRow == -1 || curHeadRow == boardObj.getRows() || curHeadCol == -1 || curHeadCol == boardObj.getCols()) {
         return 0;
     }
     // Check if new head hits a part of the snake

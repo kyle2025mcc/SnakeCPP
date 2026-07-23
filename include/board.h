@@ -5,7 +5,7 @@
 
 class board {
     private:
-        int rows;  // These two values are 0 indexed 
+        int rows; 
         int cols;
         std::vector<std::vector<int> > * gameBoard; // 0 blank space, 1 is snake, and 2 is apple
         // Use a map to print out correct values later
