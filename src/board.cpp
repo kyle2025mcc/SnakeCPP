@@ -28,7 +28,7 @@ board::board() {
     // Called to make sure random seed used in functions is different for every run through of the program
     srand(time(0));
 }
-board::board(int row_u, int col_u) {
+board::board(int row_u, int col_u, int apples) {
     gameBoard = new std::vector<std::vector<int> >; // 0 is blank space, 1 is worm, and 2 is an apple
     rows = row_u;
     cols = col_u;
@@ -47,23 +47,16 @@ board::board(int row_u, int col_u) {
     gameBoard->at(row_u/2).at(col_u - 4) = 2;
     // Called to make sure random seed used in functions is different for every run through of the program
     srand(time(0));
+    
+    // Add rest of apples in random spots 
+    for (int a = 1; a < apples; a++) {
+        setApple();
+    }
 }
 board::~board() {
     delete gameBoard;
 }
-// Function to find current apple on the board
-// May need to change if adding more than one apple on board
-void board::findApple(int& appleRow, int& appleCol) {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (gameBoard->at(i).at(j) == 2) {
-                appleRow = i;
-                appleCol = j;
-                return;
-            }
-        }
-    }
-}
+
 
 void board::setApple() {
     while(true) {
@@ -71,6 +64,21 @@ void board::setApple() {
         int randCol = rand() % (cols);
         if (gameBoard->at(randRow).at(randCol) == 0) {
             gameBoard->at(randRow).at(randCol) = 2;
+            return;
+        }
+    }
+}
+// Sets a new brick in a random location that isn't in the immediate way of snake
+void board::setBrick(int snakeRow, int snakeCol) {
+    while(true) {
+        int randRow = rand() % (rows);
+        int randCol = rand() % (cols);
+        // Messy code but checks to make sure it won't spawn brick in immediate location of snake
+        if ((randRow == snakeRow && randCol == snakeCol -1) || (randRow == snakeRow && randCol == snakeCol + 1) || (randRow == snakeRow - 1 && randCol == snakeCol) || (randRow == snakeRow + 1 && randCol == snakeCol)) {
+            continue;
+        }
+        if (gameBoard->at(randRow).at(randCol) == 0) {
+            gameBoard->at(randRow).at(randCol) = 3;
             return;
         }
     }

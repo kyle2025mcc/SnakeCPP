@@ -40,26 +40,30 @@ int snake::move(board & boardObj) {
     if (curHeadRow == -1 || curHeadRow == boardObj.getRows() || curHeadCol == -1 || curHeadCol == boardObj.getCols()) {
         return 0;
     }
-    // Check if new head hits a part of the snake
-    if (curBoard->at(curHeadRow).at(curHeadCol) == 1) {
+    // Check if new head hits a part of the snake or a brick
+    if (curBoard->at(curHeadRow).at(curHeadCol) == 1 || curBoard->at(curHeadRow).at(curHeadCol) == 3) {
         return 0;
     }
-    // See if apple is hit 
-    int appleRow, appleCol;
-    boardObj.findApple(appleRow, appleCol);
-    if (curHeadRow == appleRow && curHeadCol == appleCol) {
+    
+    
+    if (curBoard->at(curHeadRow).at(curHeadCol) == 2) {
         length++;
         // Have to update board now or else there is a case where apple fills in where head is
         curBoard->at(curHeadRow).at(curHeadCol) = 1;
         boardObj.setApple(); // Create a new apple
+        // If brick mode is activated spawn a new brick
+        if (boardObj.getIsBrickGame()) {
+            boardObj.setBrick(curHeadRow, curHeadCol);
+        }
+        return 1;
     }
+    
     // If apple isn't hit delete the tail of the snake
-    else {
-        int tailRow = snakeQueue.back().row;
-        int tailCol = snakeQueue.back().col;
-        snakeQueue.pop_back();
-        curBoard->at(tailRow).at(tailCol) = 0;
-        curBoard->at(curHeadRow).at(curHeadCol) = 1;
-    }
+    int tailRow = snakeQueue.back().row;
+    int tailCol = snakeQueue.back().col;
+    snakeQueue.pop_back();
+    curBoard->at(tailRow).at(tailCol) = 0;
+    curBoard->at(curHeadRow).at(curHeadCol) = 1;
+    
     return 1;
 }

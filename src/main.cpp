@@ -109,7 +109,8 @@ int main() {
         boardObj = new board();
     }
     else {
-        int rows, cols;
+        int rows, cols, apples, brick;
+        // Changing amount of rows
         while(true) {
             std::cout << "Enter the amount of rows for the grid (must be at least 9) or use the default value (enter 0): ";
             std::cin >> rows;
@@ -120,6 +121,7 @@ int main() {
             }
             break;
         }
+        // Changing amount of columns
         while(true) {
             std::cout<< "Enter the amount of columns for the grid (must be at least 9) or use the default value(0): ";
             std::cin >> cols;
@@ -130,9 +132,24 @@ int main() {
             }
             break;
         }
+        // Changing amount of apples
+        while(true) {
+            std::cout<< "Enter the amount of apples you want in the game (has to be greater than 0): ";
+            std::cin >> apples;
+            if (apples < 1) {
+                std::cout << "Enter a valid amount of apples" << std::endl;
+                continue;
+            }
+            break;
+        }
         snakeObj = new snake(rows);
-        boardObj = new board(rows, cols);
+        boardObj = new board(rows, cols, apples);
 
+        // See if user wants brick gamemode
+        std::cout<< "Do you want to play with the brick modifier (1) or not (0)? ";
+        std::cin >> brick;
+        if (brick < 0) brick = 0;
+        boardObj->setIsBrickGame(brick);
     }
         
     // These lines will run for all settings 
@@ -143,7 +160,7 @@ int main() {
 
     while (continueGame) {
         boardObj->printBoard();
-        std::this_thread::sleep_for(0.8s);
+        std::this_thread::sleep_for(0.4s);
         snakeObj->setDirection(checker(*snakeObj));
         clearIn();
         continueGame = snakeObj->move(*boardObj);
